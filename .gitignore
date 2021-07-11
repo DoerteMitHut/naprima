@@ -4,6 +4,7 @@ control_adaptors/__pycache__
 .sync*
 Desktop.ini
 .vscode/
+scripts/
 scripts/experiments/outputs/*
 doxygen/html/
 doxygen/latex/
