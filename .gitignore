@@ -1,0 +1,9 @@
+__pycache__
+control_adaptors/__pycache__
+.owncloud*
+.sync*
+Desktop.ini
+.vscode/
+scripts/experiments/outputs/*
+doxygen/html/
+doxygen/latex/
