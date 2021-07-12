@@ -1,6 +1,6 @@
 # The naprima Package
 
-The `naprima` package is the result of a master's thesis project and was used to faciliate the evaluation of a mathematical model of arm movement assembly from movement primitives. Its structure suggests an interface against which modules for the kinematic modeling of robots, control interfaces for the operation of robots or robot simulations, perception modules and modules for the planning of movements can be developed and added to a the existing ones to provide a library for the modular design and execution of robotics experiments.
+The `naprima` package is a result of a master's thesis project and was used to faciliate the evaluation of a mathematical model of arm movement assembly from movement primitives. Its structure suggests an interface against which modules for the kinematic modeling of robots, control interfaces for the operation of robots or robot simulations, perception modules and modules for the planning of movements can be developed and added to a the existing ones to provide a library for the modular design and execution of robotics experiments.
 
 View the documentation [here](https://doertemithut.github.io/naprima/).<br>
 If you have any suggestions, feel free to use the issue tracker.
