@@ -1,7 +1,5 @@
 var hierarchy =
 [
-    [ "workspace.analysis.DataDump", "classworkspace_1_1analysis_1_1_data_dump.html", null ],
-    [ "workspace.analysis.DataDumpster", "classworkspace_1_1analysis_1_1_data_dumpster.html", null ],
     [ "workspace.strategies.DeformationStrategy", "classworkspace_1_1strategies_1_1_deformation_strategy.html", null ],
     [ "workspace.robotics.Kinematic1DGripper", "classworkspace_1_1robotics_1_1_kinematic1_d_gripper.html", null ],
     [ "workspace.robotics.KinematicChain", "classworkspace_1_1robotics_1_1_kinematic_chain.html", null ],
@@ -10,8 +8,6 @@ var hierarchy =
     [ "workspace.RobotController", "classworkspace_1_1_robot_controller.html", null ],
     [ "workspace.utils.Robots", "classworkspace_1_1utils_1_1_robots.html", null ],
     [ "workspace.utils.Stances", "classworkspace_1_1utils_1_1_stances.html", null ],
-    [ "workspace.analysis.webots_position_reader", "classworkspace_1_1analysis_1_1webots__position__reader.html", null ],
-    [ "workspace.analysis.webots_velocity_reader", "classworkspace_1_1analysis_1_1webots__velocity__reader.html", null ],
     [ "ABC", null, [
       [ "workspace.ControlAdaptor", "classworkspace_1_1_control_adaptor.html", null ]
     ] ],

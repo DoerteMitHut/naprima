@@ -17,10 +17,6 @@ var annotated_dup =
     ] ],
     [ "workspace", null, [
       [ "analysis", null, [
-        [ "webots_position_reader", "classworkspace_1_1analysis_1_1webots__position__reader.html", "classworkspace_1_1analysis_1_1webots__position__reader" ],
-        [ "webots_velocity_reader", "classworkspace_1_1analysis_1_1webots__velocity__reader.html", "classworkspace_1_1analysis_1_1webots__velocity__reader" ],
-        [ "DataDump", "classworkspace_1_1analysis_1_1_data_dump.html", "classworkspace_1_1analysis_1_1_data_dump" ],
-        [ "DataDumpster", "classworkspace_1_1analysis_1_1_data_dumpster.html", "classworkspace_1_1analysis_1_1_data_dumpster" ],
         [ "Plotter", "classworkspace_1_1analysis_1_1_plotter.html", "classworkspace_1_1analysis_1_1_plotter" ]
       ] ],
       [ "robotics", null, [

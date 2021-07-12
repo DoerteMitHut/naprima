@@ -25,7 +25,7 @@
 var NAVTREE =
 [
   [ "NaPrimA", "index.html", [
-    [ "The <tt>naprima</tt> Package", "index.html", [
+    [ "The naprima Package", "index.html", [
       [ "An Example Experiment", "index.html#autotoc_md1", [
         [ "Generating Movements from Movement Primitives", "index.html#autotoc_md2", null ],
         [ "Kinematics", "index.html#autotoc_md3", null ]
