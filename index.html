@@ -16,8 +16,8 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -133,7 +133,7 @@ Generating Movements from Movement Primitives</h2>
 <div class="line">values = [transport(t,task) for t in linspace(0,1.5,100)]</div>
 </div><!-- fragment --><p> If we import a second primitive <code>vertical_lift</code> from <code>naprima.primitives</code>, which requires an amplitude parameter from the task, we can now import the movement strategy class to assemble both primitives into a movement strategy as follows:</p>
 <div class="fragment"><div class="line"># importing primitives</div>
-<div class="line">from naprima.primitives import transport, vertical_lift</div>
+<div class="line">from naprima.primitives import transport, lift</div>
 <div class="line"># importing Movement Strategy</div>
 <div class="line">from naprima.strategies import MovementStrategy</div>
 <div class="line"> </div>
@@ -143,23 +143,26 @@ Generating Movements from Movement Primitives</h2>
 <div class="line"> </div>
 <div class="line"># adding lift_amplitude to the task</div>
 <div class="line">task = {</div>
+<div class="line">    &quot;timestep&quot;:0.0016,</div>
 <div class="line">    &quot;tau&quot; : 1.5,</div>
 <div class="line">    &quot;p_target&quot;: p_target,</div>
-<div class="line">    &quot;p_0&quot;: p_0</div>
-<div class="line">    &quot;lift_amplitude&quot;: 0.3</div>
+<div class="line">    &quot;p_0&quot;: p_0,</div>
+<div class="line">    &quot;A&quot;: 0.3,#lift amplitude</div>
+<div class="line">    &quot;alpha&quot;:0.5#lift elevation angle</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"># instantiating a strategy to apply transport and lift to the task </div>
-<div class="line">strategy = MovementStrategy(task,[transport,vertical_lift])</div>
+<div class="line">strategy = MovementStrategy([transport,lift])</div>
 <div class="line"> </div>
 <div class="line"># obtaining movement at instant t as SE(3)-matrix from strategy </div>
-<div class="line">strategy.get_movement(t,&quot;SE(3)&quot;)</div>
+<div class="line">t = 0.01</div>
+<div class="line">strategy.get_movement(t,task,&quot;SE(3)&quot;)</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md3"></a>
 Kinematics</h2>
 <p>To deploy the movements that result from a strategy to a kinematic model of a kinematic chain, we import the <code>KinematicChain</code> class from <code>naprima.robotics</code> and define a kinematic chain by providing the axes of rotation for its joints, the positions of said joints in the chosen home position and the SE(3)-matrix to transform the base frame {B} into the tool frame {T} when the robot is in its home position.</p>
 <p>For illustration purposes I will use a 2R(meaning two revolute joints)-robot.</p>
 <div class="fragment"><div class="line"># importing primitives</div>
-<div class="line">from naprima.primitives import transport, vertical_lift</div>
+<div class="line">from naprima.primitives import transport, lift</div>
 <div class="line">from naprima.strategies import MovementStrategy</div>
 <div class="line">from naprima.robotics import KinematicChain</div>
 <div class="line"> </div>
@@ -174,29 +177,34 @@ Kinematics</h2>
 <div class="line">                       [0,0,1,1.0],</div>
 <div class="line">                       [0,0,0,1]])</div>
 <div class="line"> </div>
-<div class="line">robot = KinematicChain(joint_axes,joint_positions,tool_frame)</div>
+<div class="line">robot = KinematicChain(joint_rotation_axes=joint_axes,</div>
+<div class="line">                        joint_home_positions=joint_positions,</div>
+<div class="line">                        tool_frame_home = tool_frame)</div>
 <div class="line">                       </div>
 <div class="line"># defining initial positions of target and eef</div>
-<div class="line">p_target = [0,1,0.2]</div>
+<div class="line">p_target = [0.1,0,0.8]</div>
 <div class="line"># get initial eef position from the forward kinematic with thetas = (0,0)</div>
 <div class="line">current_theta = [0,0]</div>
 <div class="line">p_0 = robot.get_fk_position(current_theta)</div>
 <div class="line"> </div>
 <div class="line"># adding lift_amplitude to the task</div>
 <div class="line">task = {</div>
+<div class="line">    &quot;timestep&quot;:0.0016,</div>
 <div class="line">    &quot;tau&quot; : 1.5,</div>
 <div class="line">    &quot;p_target&quot;: p_target,</div>
-<div class="line">    &quot;p_0&quot;: p_0</div>
-<div class="line">    &quot;lift_amplitude&quot;: 0.3</div>
+<div class="line">    &quot;p_0&quot;: p_0,</div>
+<div class="line">    &quot;A&quot;: 0.03,#lift amplitude</div>
+<div class="line">    &quot;alpha&quot;:0#lift elevation angle</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"># instantiating a strategy to apply transport and lift to the task </div>
-<div class="line">strategy = MovementStrategy(task,[transport,vertical_lift])</div>
+<div class="line">strategy = MovementStrategy([transport,lift])</div>
 <div class="line"> </div>
-<div class="line"># obtaining the spatial velocity at instant t from movement strategy </div>
-<div class="line">twist = strategy.get_movement(t,&quot;TwistVector&quot;)</div>
+<div class="line"># obtaining the spatial velocity at instant t from movement strategy</div>
+<div class="line">t = 0</div>
+<div class="line">twist = strategy.get_movement(t,task,&quot;TwistVector&quot;)</div>
 <div class="line"># obtaining desired joint velocities by leftt multiplying the current Jacobian </div>
-<div class="line">inv_Jacobian = robot.get_inverse_Jacobian(current_theta) @ twist</div>
+<div class="line">theta_dot = robot.get_inverse_jacobian(current_theta) @ twist</div>
 <div class="line"># updating current theta with a 1s-timestep</div>
 <div class="line">current_theta = current_theta + theta_dot</div>
 </div><!-- fragment --> </div></div><!-- PageDoc -->
