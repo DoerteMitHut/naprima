@@ -59,7 +59,7 @@ If we import a second primitive `vertical_lift` from `naprima.primitives`, which
 
 ```python
 # importing primitives
-from naprima.primitives import transport, vertical_lift
+from naprima.primitives import transport, lift
 # importing Movement Strategy
 from naprima.strategies import MovementStrategy
 
@@ -69,17 +69,20 @@ p_0 = [0,0.5,0.2]
 
 # adding lift_amplitude to the task
 task = {
+    "timestep":0.0016,
     "tau" : 1.5,
     "p_target": p_target,
-    "p_0": p_0
-    "lift_amplitude": 0.3
+    "p_0": p_0,
+    "A": 0.3,#lift amplitude
+    "alpha":0.5#lift elevation angle
 }
 
 # instantiating a strategy to apply transport and lift to the task 
-strategy = MovementStrategy(task,[transport,vertical_lift])
+strategy = MovementStrategy([transport,lift])
 
 # obtaining movement at instant t as SE(3)-matrix from strategy 
-strategy.get_movement(t,"SE(3)")
+t = 0.01
+strategy.get_movement(t,task,"SE(3)")
 ```
 
 ## Kinematics
@@ -90,7 +93,7 @@ For illustration purposes I will use a 2R(meaning two revolute joints)-robot.
 
 ```python
 # importing primitives
-from naprima.primitives import transport, vertical_lift
+from naprima.primitives import transport, lift
 from naprima.strategies import MovementStrategy
 from naprima.robotics import KinematicChain
 
@@ -105,29 +108,34 @@ tool_frame = np.array([[1,0,0,0],
                        [0,0,1,1.0],
                        [0,0,0,1]])
 
-robot = KinematicChain(joint_axes,joint_positions,tool_frame)
+robot = KinematicChain(joint_rotation_axes=joint_axes,
+                        joint_home_positions=joint_positions,
+                        tool_frame_home = tool_frame)
                        
 # defining initial positions of target and eef
-p_target = [0,1,0.2]
+p_target = [0.1,0,0.8]
 # get initial eef position from the forward kinematic with thetas = (0,0)
 current_theta = [0,0]
 p_0 = robot.get_fk_position(current_theta)
 
 # adding lift_amplitude to the task
 task = {
+    "timestep":0.0016,
     "tau" : 1.5,
     "p_target": p_target,
-    "p_0": p_0
-    "lift_amplitude": 0.3
+    "p_0": p_0,
+    "A": 0.03,#lift amplitude
+    "alpha":0#lift elevation angle
 }
 
 # instantiating a strategy to apply transport and lift to the task 
-strategy = MovementStrategy(task,[transport,vertical_lift])
+strategy = MovementStrategy([transport,lift])
 
-# obtaining the spatial velocity at instant t from movement strategy 
-twist = strategy.get_movement(t,"TwistVector")
+# obtaining the spatial velocity at instant t from movement strategy
+t = 0
+twist = strategy.get_movement(t,task,"TwistVector")
 # obtaining desired joint velocities by leftt multiplying the current Jacobian 
-inv_Jacobian = robot.get_inverse_Jacobian(current_theta) @ twist
+theta_dot = robot.get_inverse_jacobian(current_theta) @ twist
 # updating current theta with a 1s-timestep
 current_theta = current_theta + theta_dot
 ```
